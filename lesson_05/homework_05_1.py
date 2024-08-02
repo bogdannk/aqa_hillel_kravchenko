@@ -50,19 +50,34 @@ search_criteria = (2017, 1.6, 36000)
 
 # task solution
 
-"""First, let's sort to select cars that meet the search criteria"""
-filtered_cars = []
-for brand, details in car_data.items():
-    year, engine_volume, price = details[1], details[2], details[4]
-    if year >= search_criteria[0] and engine_volume >= search_criteria[1] and price <= search_criteria[2]:
-        filtered_cars.append((brand, details))
+# """First, let's sort to select cars that meet the search criteria"""
+# filtered_cars = []
+# for brand, details in car_data.items():
+#     year, engine_volume, price = details[1], details[2], details[4]
+#     if year >= search_criteria[0] and engine_volume >= search_criteria[1] and price <= search_criteria[2]:
+#         filtered_cars.append((brand, details))
+#
+# """And now we will filter by price increase"""
+# for i in range(len(filtered_cars) - 1):
+#     for j in range(len(filtered_cars) - i - 1):
+#         if filtered_cars[j][1][4] > filtered_cars[j + 1][1][4]:
+#             filtered_cars[j], filtered_cars[j + 1] = filtered_cars[j + 1], filtered_cars[j]
+#
+# """ Print a list of 5 cars and number them """
+# for number, car in enumerate(filtered_cars[:5], start=1):
+#     print(f"{number}. {car}")
 
-"""And now we will filter by price increase"""
-for i in range(len(filtered_cars) - 1):
-    for j in range(len(filtered_cars) - i - 1):
-        if filtered_cars[j][1][4] > filtered_cars[j + 1][1][4]:
-            filtered_cars[j], filtered_cars[j + 1] = filtered_cars[j + 1], filtered_cars[j]
+# ANOTHER WAY OF SOLVING THE TASK
+
+""" Filtering cars that meet the search criteria """
+filtered_cars = list(filter(
+    lambda car: car[1][1] >= search_criteria[0] and car[1][2] >= search_criteria[1] and car[1][4] <= search_criteria[2],
+    car_data.items()
+))
+
+""" Sorting filtered cars by price """
+sorted_cars = sorted(filtered_cars, key=lambda car: car[1][4])
 
 """ Print a list of 5 cars and number them """
-for number, car in enumerate(filtered_cars[:5], start=1):
+for number, car in enumerate(sorted_cars[:5], start=1):
     print(f"{number}. {car}")
