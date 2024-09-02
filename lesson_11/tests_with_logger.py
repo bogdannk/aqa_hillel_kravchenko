@@ -1,6 +1,6 @@
 import logging
 from assertpy import assert_that
-from lesson_10.homework_10 import log_event
+from lesson_11.homework_10 import log_event
 
 class TestLogLevels:
     LOG_FILE = 'login_system.log'

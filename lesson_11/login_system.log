@@ -1,0 +1,6 @@
+2024-09-02 14:17:44,349 - Login event - Username: user1, Status: success
+2024-09-02 14:17:44,352 - Login event - Username: user2, Status: expired
+2024-09-02 14:17:44,352 - Login event - Username: user2, Status: expired
+2024-09-02 14:17:44,354 - Login event - Username: user3, Status: failed
+2024-09-02 14:17:44,354 - Login event - Username: user3, Status: failed
+2024-09-02 14:17:44,354 - Login event - Username: user3, Status: failed
