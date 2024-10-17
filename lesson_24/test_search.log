@@ -1,0 +1,22 @@
+2024-10-17 17:29:25,762 - INFO - Testing with sort_by=price and limit=5
+2024-10-17 17:29:25,762 - INFO - Response status code: 200
+2024-10-17 17:29:25,762 - INFO - Response data: [{'brand': 'Chevrolet', 'engine_volume': 1.8, 'price': 28000, 'year': 2018}, {'brand': 'Hyundai', 'engine_volume': 1.6, 'price': 29000, 'year': 2020}, {'brand': 'Honda', 'engine_volume': 1.6, 'price': 30000, 'year': 2016}, {'brand': 'Kia', 'engine_volume': 2.0, 'price': 31000, 'year': 2019}, {'brand': 'Ford', 'engine_volume': 2.2, 'price': 32000, 'year': 2015}]
+2024-10-17 17:29:25,767 - INFO - Testing with sort_by=year and limit=10
+2024-10-17 17:29:25,767 - INFO - Response status code: 200
+2024-10-17 17:29:25,767 - INFO - Response data: [{'brand': 'Ford', 'engine_volume': 2.2, 'price': 32000, 'year': 2015}, {'brand': 'Honda', 'engine_volume': 1.6, 'price': 30000, 'year': 2016}, {'brand': 'Toyota', 'engine_volume': 2.4, 'price': 35000, 'year': 2017}, {'brand': 'Subaru', 'engine_volume': 2.5, 'price': 40000, 'year': 2017}, {'brand': 'BMW', 'engine_volume': 2.0, 'price': 50000, 'year': 2018}, {'brand': 'Chevrolet', 'engine_volume': 1.8, 'price': 28000, 'year': 2018}, {'brand': 'Mazda', 'engine_volume': 2.0, 'price': 32000, 'year': 2018}, {'brand': 'Jeep', 'engine_volume': 3.6, 'price': 45000, 'year': 2018}, {'brand': 'Mercedes', 'engine_volume': 2.5, 'price': 55000, 'year': 2019}, {'brand': 'Volkswagen', 'engine_volume': 2.0, 'price': 33000, 'year': 2019}]
+2024-10-17 17:29:25,772 - INFO - Testing with sort_by=engine_volume and limit=3
+2024-10-17 17:29:25,773 - INFO - Response status code: 200
+2024-10-17 17:29:25,773 - INFO - Response data: [{'brand': 'Tesla', 'engine_volume': 0.0, 'price': 80000, 'year': 2020}, {'brand': 'Nissan', 'engine_volume': 1.5, 'price': 40000, 'year': 2021}, {'brand': 'Honda', 'engine_volume': 1.6, 'price': 30000, 'year': 2016}]
+2024-10-17 17:29:25,777 - INFO - Testing with sort_by=None and limit=4
+2024-10-17 17:29:25,778 - INFO - Response status code: 200
+2024-10-17 17:29:25,778 - INFO - Response data: [{'brand': 'Acura', 'engine_volume': 2.4, 'price': 48000, 'year': 2020}, {'brand': 'Audi', 'engine_volume': 1.8, 'price': 45000, 'year': 2020}, {'brand': 'BMW', 'engine_volume': 2.0, 'price': 50000, 'year': 2018}, {'brand': 'Bugatti', 'engine_volume': 8.0, 'price': 350000, 'year': 2019}]
+2024-10-17 17:29:25,782 - INFO - Testing with sort_by=brand and limit=7
+2024-10-17 17:29:25,783 - INFO - Response status code: 200
+2024-10-17 17:29:25,783 - INFO - Response data: [{'brand': 'Acura', 'engine_volume': 2.4, 'price': 48000, 'year': 2020}, {'brand': 'Audi', 'engine_volume': 1.8, 'price': 45000, 'year': 2020}, {'brand': 'BMW', 'engine_volume': 2.0, 'price': 50000, 'year': 2018}, {'brand': 'Bugatti', 'engine_volume': 8.0, 'price': 350000, 'year': 2019}, {'brand': 'Chevrolet', 'engine_volume': 1.8, 'price': 28000, 'year': 2018}, {'brand': 'Ferrari', 'engine_volume': 6.3, 'price': 250000, 'year': 2021}, {'brand': 'Ford', 'engine_volume': 2.2, 'price': 32000, 'year': 2015}]
+2024-10-17 17:29:25,788 - INFO - Testing with sort_by=price and limit=0
+2024-10-17 17:29:25,788 - INFO - Response status code: 200
+2024-10-17 17:29:25,788 - INFO - Response data: []
+2024-10-17 17:29:25,793 - INFO - Testing with limit=0 to check for empty response
+2024-10-17 17:29:25,798 - INFO - Testing response structure
+2024-10-17 17:29:25,802 - INFO - Testing cars sorted by price
+2024-10-17 17:29:25,802 - INFO - Authorization completed.
