@@ -1,0 +1,2 @@
+INFO     root:test_api_search_cars.py:56 Testing cars sorted by price
+INFO     root:conftest.py:35 Authorization completed.

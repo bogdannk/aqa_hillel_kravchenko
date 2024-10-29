@@ -1,0 +1,3 @@
+2024-10-30 00:03:46,146 - INFO - Testing with sort_by=None and limit=4
+2024-10-30 00:03:46,146 - INFO - Response status code: 200
+2024-10-30 00:03:46,147 - INFO - Response data: [{'brand': 'Acura', 'engine_volume': 2.4, 'price': 48000, 'year': 2020}, {'brand': 'Audi', 'engine_volume': 1.8, 'price': 45000, 'year': 2020}, {'brand': 'BMW', 'engine_volume': 2.0, 'price': 50000, 'year': 2018}, {'brand': 'Bugatti', 'engine_volume': 8.0, 'price': 350000, 'year': 2019}]

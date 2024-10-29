@@ -1,0 +1,1 @@
+INFO     root:test_api_search_cars.py:43 Testing response structure

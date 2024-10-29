@@ -1,0 +1,3 @@
+2024-10-30 00:11:22,423 - INFO - Testing with sort_by=price and limit=0
+2024-10-30 00:11:22,424 - INFO - Response status code: 200
+2024-10-30 00:11:22,424 - INFO - Response data: []
