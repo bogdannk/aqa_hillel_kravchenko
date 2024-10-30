@@ -1,10 +1,11 @@
+import allure
 import pytest
 import logging
 from assertpy import assert_that
 from requests import Response
 from lesson_24.conftest import BASE_URL
 
-
+@allure.feature("Car API Search")
 class TestCarAPISearch:
 
     @pytest.mark.parametrize("sort_by, limit, expected_count", [
@@ -15,6 +16,7 @@ class TestCarAPISearch:
         ("brand", 7, 7),
         ("price", 0, 0),
     ])
+    @allure.step("Check car list with sort_by='{sort_by}' and limit={limit}")
     def test_get_cars(self, authorization, sort_by, limit, expected_count):
         response: Response = authorization.get(f"{BASE_URL}/cars", params={"sort_by": sort_by, "limit": limit})
 
@@ -29,6 +31,8 @@ class TestCarAPISearch:
 
         assert_that(len(response_data)).is_equal_to(expected_count)
 
+    @allure.feature("Car API Empty Response")
+    @allure.step("Check empty response with limit=0")
     def test_get_cars_empty_response(self, authorization):
         response: Response = authorization.get(f"{BASE_URL}/cars", params={"sort_by": "price", "limit": 0})
 
@@ -37,6 +41,8 @@ class TestCarAPISearch:
         response_data = response.json()
         assert_that(response_data).is_equal_to([])
 
+    @allure.feature("Car API Response Structure")
+    @allure.step("Check response structure contains required fields")
     def test_get_cars_response_structure(self, authorization):
         response: Response = authorization.get(f"{BASE_URL}/cars", params={"sort_by": "price", "limit": 5})
 
@@ -50,6 +56,8 @@ class TestCarAPISearch:
             assert_that("year" in car).is_true()
             assert_that("engine_volume" in car).is_true()
 
+    @allure.feature("Car API Sorted by Price")
+    @allure.step("Check cars sorted by price in ascending order")
     def test_get_cars_sorted_by_price(self, authorization):
         response: Response = authorization.get(f"{BASE_URL}/cars", params={"sort_by": "price", "limit": 10})
 

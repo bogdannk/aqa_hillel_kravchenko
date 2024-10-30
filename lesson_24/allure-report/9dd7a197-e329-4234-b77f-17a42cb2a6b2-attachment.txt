@@ -1,0 +1,2 @@
+2024-10-30 00:11:22,449 - INFO - Testing cars sorted by price
+2024-10-30 00:11:22,450 - INFO - Authorization completed.

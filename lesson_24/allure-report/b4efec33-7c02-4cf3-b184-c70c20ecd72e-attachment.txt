@@ -1,0 +1,1 @@
+INFO     root:test_api_search_cars.py:39 Testing with limit=0 to check for empty response
