@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Установка pyenv и Python
+                        # Проверка, установлен ли pyenv
                         if ! command -v pyenv &> /dev/null; then
                             echo "pyenv не найден. Устанавливаем..."
                             curl https://pyenv.run | bash
@@ -25,12 +25,12 @@ pipeline {
                             echo "pyenv уже установлен."
                         fi
 
-                        # Настройка pyenv
+                        # Добавление pyenv в PATH
                         export PATH="$HOME/.pyenv/bin:$PATH"
                         eval "$(pyenv init --path)"
                         eval "$(pyenv init -)"
 
-                        # Установка нужной версии Python
+                        # Установка и активация нужной версии Python
                         if ! pyenv versions | grep -q ${PYTHON_VERSION}; then
                             pyenv install ${PYTHON_VERSION}
                         fi
@@ -44,7 +44,6 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Создание виртуального окружения
                         if [ ! -d "${VENV_DIR}" ]; then
                             echo "Создаём виртуальное окружение..."
                             python -m venv ${VENV_DIR}
@@ -60,7 +59,6 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Активация виртуального окружения и установка зависимостей
                         source ${VENV_DIR}/bin/activate
                         pip install --upgrade pip
                         pip install -r requirements.txt
@@ -73,9 +71,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Запуск тестов
                         source ${VENV_DIR}/bin/activate
-                        pytest --maxfail=1 --disable-warnings -q --junitxml=test-results.xml tests/
+                        pytest --maxfail=1 --disable-warnings -q tests/
                     '''
                 }
             }
@@ -83,16 +80,23 @@ pipeline {
 
         stage('Publish Test Results') {
             steps {
-                junit 'test-results.xml'  // Указываем путь к файлу результатов тестов
+                junit '**/test-*.xml'  // Предполагается, что результаты тестов в формате JUnit XML
             }
         }
     }
 
     post {
         always {
-            mail to: 'kravchenko.appleid@gmail.com',
-                 subject: "Test Results for ${currentBuild.fullDisplayName}",
-                 body: "Please see the test results at ${env.BUILD_URL}"
+            script {
+                // Проверка, установлен ли почтовый сервер
+                if (currentBuild.result == 'FAILURE') {
+                    echo 'Ошибка при выполнении сборки. Проверка почтовых уведомлений отключена.'
+                } else {
+                    mail to: 'kravchenko.appleid@gmail.com',
+                         subject: "Test Results for ${currentBuild.fullDisplayName}",
+                         body: "Please see the test results at ${env.BUILD_URL}"
+                }
+            }
         }
     }
 }
