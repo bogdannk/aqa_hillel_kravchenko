@@ -4,6 +4,8 @@ pipeline {
     environment {
         PYTHON_VERSION = '3.11.9'
         VENV_DIR = 'venv'
+        REPORT_DIR = 'lesson_30/reports'
+        REPORT_FILE = 'report.xml'
     }
 
     stages {
@@ -57,8 +59,11 @@ pipeline {
                         echo "Installing dependencies from requirements.txt..."
                         pip install -r requirements.txt
 
+                        # Создаём папку для отчётов
+                        mkdir -p ${REPORT_DIR}
+
                         echo "Running tests and generating report..."
-                        pytest --maxfail=1 --disable-warnings -q --junitxml=${WORKSPACE}/report.xml lesson_30/test_initial.py
+                        pytest --maxfail=1 --disable-warnings -q --junitxml=${REPORT_DIR}/${REPORT_FILE} lesson_30/test_initial.py
                     """
                 }
             }
@@ -66,7 +71,7 @@ pipeline {
 
         stage("Publish Test Results") {
             steps {
-                junit 'report.xml'
+                junit "${REPORT_DIR}/${REPORT_FILE}"
             }
         }
     }
