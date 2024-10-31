@@ -17,27 +17,24 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Проверка, установлен ли Python
-                        if ! command -v python &> /dev/null; then
-                            echo "Python не найден. Устанавливаем pyenv..."
-                            if [ ! -d "$HOME/.pyenv" ]; then
-                                curl https://pyenv.run | bash
-                            else
-                                echo "Pyenv уже установлен."
-                            fi
-
-                            export PATH="$HOME/.pyenv/bin:$PATH"
-                            eval "$(pyenv init --path)"
-                            eval "$(pyenv init -)"
-
-                            # Установка и активация нужной версии Python
-                            if ! pyenv versions | grep -q ${PYTHON_VERSION}; then
-                                pyenv install ${PYTHON_VERSION}
-                            fi
-                            pyenv global ${PYTHON_VERSION}
+                        # Установка pyenv и Python
+                        if ! command -v pyenv &> /dev/null; then
+                            echo "pyenv не найден. Устанавливаем..."
+                            curl https://pyenv.run | bash
                         else
-                            echo "Python уже установлен."
+                            echo "pyenv уже установлен."
                         fi
+
+                        # Настройка pyenv
+                        export PATH="$HOME/.pyenv/bin:$PATH"
+                        eval "$(pyenv init --path)"
+                        eval "$(pyenv init -)"
+
+                        # Установка нужной версии Python
+                        if ! pyenv versions | grep -q ${PYTHON_VERSION}; then
+                            pyenv install ${PYTHON_VERSION}
+                        fi
+                        pyenv global ${PYTHON_VERSION}
                     '''
                 }
             }
@@ -47,6 +44,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                        # Создание виртуального окружения
                         if [ ! -d "${VENV_DIR}" ]; then
                             echo "Создаём виртуальное окружение..."
                             python -m venv ${VENV_DIR}
@@ -62,6 +60,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                        # Активация виртуального окружения и установка зависимостей
                         source ${VENV_DIR}/bin/activate
                         pip install --upgrade pip
                         pip install -r requirements.txt
@@ -74,8 +73,9 @@ pipeline {
             steps {
                 script {
                     sh '''
+                        # Запуск тестов
                         source ${VENV_DIR}/bin/activate
-                        pytest --maxfail=1 --disable-warnings -q tests/
+                        pytest --maxfail=1 --disable-warnings -q --junitxml=test-results.xml tests/
                     '''
                 }
             }
@@ -83,7 +83,7 @@ pipeline {
 
         stage('Publish Test Results') {
             steps {
-                junit '**/test-*.xml'  // Предполагается, что результаты тестов в формате JUnit XML
+                junit 'test-results.xml'  // Указываем путь к файлу результатов тестов
             }
         }
     }
