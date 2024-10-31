@@ -17,22 +17,27 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        if [ ! -d "$HOME/.pyenv" ]; then
-                            echo "Installing pyenv..."
-                            curl https://pyenv.run | bash
+                        # Проверка, установлен ли Python
+                        if ! command -v python &> /dev/null; then
+                            echo "Python не найден. Устанавливаем pyenv..."
+                            if [ ! -d "$HOME/.pyenv" ]; then
+                                curl https://pyenv.run | bash
+                            else
+                                echo "Pyenv уже установлен."
+                            fi
+
+                            export PATH="$HOME/.pyenv/bin:$PATH"
+                            eval "$(pyenv init --path)"
+                            eval "$(pyenv init -)"
+
+                            # Установка и активация нужной версии Python
+                            if ! pyenv versions | grep -q ${PYTHON_VERSION}; then
+                                pyenv install ${PYTHON_VERSION}
+                            fi
+                            pyenv global ${PYTHON_VERSION}
                         else
-                            echo "Pyenv is already installed."
+                            echo "Python уже установлен."
                         fi
-
-                        export PATH="$HOME/.pyenv/bin:$PATH"
-                        eval "$(pyenv init --path)"
-                        eval "$(pyenv init -)"
-
-                        # Установка и активация нужной версии Python
-                        if ! pyenv versions | grep -q ${PYTHON_VERSION}; then
-                            pyenv install ${PYTHON_VERSION}
-                        fi
-                        pyenv global ${PYTHON_VERSION}
                     '''
                 }
             }
@@ -43,10 +48,10 @@ pipeline {
                 script {
                     sh '''
                         if [ ! -d "${VENV_DIR}" ]; then
-                            echo "Creating virtual environment..."
+                            echo "Создаём виртуальное окружение..."
                             python -m venv ${VENV_DIR}
                         else
-                            echo "Virtual environment already exists."
+                            echo "Виртуальное окружение уже существует."
                         fi
                     '''
                 }
