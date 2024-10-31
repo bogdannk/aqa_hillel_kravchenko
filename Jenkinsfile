@@ -43,7 +43,7 @@ pipeline {
                     sh """
                         if [ ! -d "${VENV_DIR}" ]; then
                             echo "Creating virtual environment..."
-                            python3 -m venv ${VENV_DIR}
+                            python -m venv ${VENV_DIR}
                         else
                             echo "Virtual environment already exists."
                         fi
@@ -56,10 +56,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        # Активация виртуального окружения и установка зависимостей
                         source ${VENV_DIR}/bin/activate
                         pip install --upgrade pip
-                        pip install -r requirements.txt
+                        pip install -r /Users/bogdankravcenko/PycharmProjects/aqa_hillel_kravchenko/requirements.txt
                     """
                 }
             }
@@ -69,7 +68,6 @@ pipeline {
             steps {
                 script {
                     sh """
-                        # Активация виртуального окружения и запуск тестов
                         source ${VENV_DIR}/bin/activate
                         pytest --maxfail=1 --disable-warnings -q tests/
                     """
