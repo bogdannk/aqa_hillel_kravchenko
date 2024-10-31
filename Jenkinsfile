@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/bogdannk/aqa_hillel_kravcenko.git', branch: 'main'
+                git url: 'https://github.com/bogdannk/aqa_hillel_kravhcenko.git', branch: 'main'
             }
         }
 
