@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     echo "Checking out code from Git..."
-                    git url: 'https://github.com/bogdannk/aqa_hillel_kravcenko.git', branch: 'homework_31'
+                    git url: 'https://github.com/bogdannk/aqa_hillel_kravchenko.git', branch: 'homework_31'
                 }
             }
         }
