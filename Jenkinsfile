@@ -58,10 +58,23 @@ pipeline {
                         pip install -r requirements.txt
 
                         echo "Running tests..."
-                        pytest --maxfail=1 --disable-warnings -q lesson_30/test_initial.py
+                        pytest --maxfail=1 --disable-warnings -q --junitxml=test-results.xml lesson_30/test_initial.py
                     """
                 }
             }
+        }
+
+        stage('Publish Test Results') {
+            steps {
+                junit 'test-results.xml'  // Публикация результатов тестов
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            // Дополнительные действия по очистке, если необходимо
         }
     }
 }
