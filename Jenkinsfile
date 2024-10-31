@@ -35,9 +35,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        if [ ! -d "\${VENV_DIR}" ]; then
+                        if [ ! -d "${VENV_DIR}" ]; then
                             echo "Creating virtual environment..."
-                            python -m venv \${VENV_DIR}
+                            python3 -m venv "${VENV_DIR}"
                         else
                             echo "Virtual environment already exists."
                         fi
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        source ${VENV_DIR}/bin/activate
+                        source "${VENV_DIR}/bin/activate"
 
                         echo "Upgrading pip..."
                         pip install --upgrade pip
@@ -58,23 +58,18 @@ pipeline {
                         pip install -r requirements.txt
 
                         echo "Running tests..."
-                        pytest --maxfail=1 --disable-warnings -q --junitxml=test-results.xml lesson_30/test_initial.py
+                        pytest --maxfail=1 --disable-warnings -q lesson_30/test_initial.py
                     """
                 }
             }
         }
 
-        stage('Publish Test Results') {
+        stage("Publish Test Results") {
             steps {
-                junit 'test-results.xml'  // Публикация результатов тестов
+                script {
+                    junit '**/test-reports/*.xml'
+                }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning up...'
-            // Дополнительные действия по очистке, если необходимо
         }
     }
 }
